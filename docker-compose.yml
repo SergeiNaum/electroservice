@@ -1,13 +1,49 @@
+networks:
+  default:
+    driver: bridge
+
 services:
   mysql:
     image: mysql:5.7
+    container_name: mysql1
     env_file:
       - ./docker/env/.env
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+    restart: always
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    env_file:
+      - ./docker/env/.env
+    depends_on:
+      - mysql
+    restart: always
+    command: sh -c "sleep 10 && poetry run flask db upgrade && poetry run gunicorn -c gunicorn_conf.py 'app:create_app()'"
+
+
+  nginx:
+    container_name: nginx
+    working_dir: /app
+    image: nginx:stable-alpine
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./docker/nginx/prod:/etc/nginx/conf.d:ro
+      - ./docker/nginx/errors:/usr/share/nginx/html/502.html
+    links:
+      - flask
+    depends_on:
+      - flask
+
+
 
 
 volumes:
