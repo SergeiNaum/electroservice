@@ -3,7 +3,7 @@
 
 ## Quick start
 
-#### --> [Demo](http://77.222.53.154/) <--
+#### --> [Demo](http://77.222.53.154:5000/) <--
 
 ##### Download image from docker hub
 
@@ -13,16 +13,18 @@ docker pull sergeynaum/electroservice:latest
 ```
 ---
 
-##### create directory {dirname} and navigate to it
+##### create directory app and navigate to it
 
 ```
 mkdir app && cd app
 ```
-
 ---
 
-##### create file docker-compose.yml and copy the contents from here: https://github.com/SergeiNaum/electroservice/blob/master/docker-compose.yml
+##### clone project 
 
+```
+git clone https://github.com/SergeiNaum/electroservice.git
+```
 ---
 
 ##### Start app execute the command
