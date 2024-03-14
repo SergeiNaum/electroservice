@@ -34,7 +34,7 @@ docker-compose up
 ##### CONGRATULATIONS THE CONTAINER IS UP AND RUNNING AND THE app IS READY FOR TESTING_🚀
 
 ---
-##### Open http://0.0.0.0:5000/  in your browser
+##### Open http://0.0.0.0:5000/ or http://localhost:5000/ in your browser
 
 **To stop app, execute the command**
 
