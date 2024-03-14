@@ -3,6 +3,8 @@
 
 ## Quick start
 
+#### --> [Demo](http://77.222.53.154/) <--
+
 ##### Download image from docker hub
 
 ---
@@ -19,15 +21,21 @@ mkdir app && cd app
 
 ---
 
-##### create file docker-compose.yml and copy the contents from here: https://github.com/SergeiNaum/resonline/blob/master/docker-compose.yml
+##### create file docker-compose.yml and copy the contents from here: https://github.com/SergeiNaum/electroservice/blob/master/docker-compose.yml
 
 ---
 
+##### Start app execute the command
+```
+docker-compose up
+```
+##### CONGRATULATIONS THE CONTAINER IS UP AND RUNNING AND THE app IS READY FOR TESTING_🚀
+
+---
+##### Open http://0.0.0.0:5000/  in your browser
+
+**To stop app, execute the command**
 
 ```
-
-**To stop the microservice, execute the command**
-
-```
-make docker-compose_down
+docker-compose down -v
 ```

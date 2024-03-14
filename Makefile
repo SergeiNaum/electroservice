@@ -34,6 +34,9 @@ make_revision:
 make_upgrade:
 	flask db upgrade название_ревизии
 
+docker-compose_down:
+	docker-compose down -v
+
 
 .PHONY: install lint start
 
