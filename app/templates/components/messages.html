@@ -1,5 +1,5 @@
-{% if messages %}
-  {% for category, message in messages %}
+{% if data.messages %}
+  {% for category, message in data.messages %}
     <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
   {% endfor %}
 {% endif %}

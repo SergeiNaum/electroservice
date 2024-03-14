@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{data.h2_title}}</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+        {{ form.title.label(class="form-label") }}
+        {% if form.title.data %}
+            {{ form.title(class="form-control", value=form.title.data) }}
+        {% else %}
+            {{ form.title(class="form-control") }}
+        {% endif %}
+        </div>
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {% if form.price.data %}
+                {{ form.price(class="form-control", value=form.title.data) }}
+            {% else %}
+                {{ form.price(class="form-control") }}
+            {% endif %}
+        </div>
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+</div>
+{% endblock %}

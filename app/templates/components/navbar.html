@@ -14,19 +14,27 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item {% if active_page == 'index' %}active{% endif %} gradient">
-              <a class="nav-link" href="{{ url_for('index') }}">Главная</a>
+            <li class="nav-item {% if data.active_page == 'index' %}text-secondary{% else %} text-black {% endif %} gradient">
+              <a class="nav-link" href="{{ url_for('main.index') }}">Главная</a>
             </li>
 
-            <li class="nav-item {% if active_page == 'index' %}active{% endif %} gradient">
-              <a class="nav-link" href="{{ url_for('reg') }}">Регистрация</a>
-            </li>
 
-            <li class="nav-item {% if active_page == 'index' %}active{% endif %} gradient">
-              <a class="nav-link" href="{{ url_for('login') }}">Вход</a>
+            <li class="nav-item {% if data.active_page == 'index' %}active{% endif %} gradient">
+              <a class="nav-link" href="{{ url_for('auth.reg') }}">Подать заявку</a>
             </li>
           </ul>
+
+                {% if not current_user.is_authenticated %}
+                <div class="text-end fw-bold flex-grow-1">
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-dark text-white fw-bold text-decoration-none me-2">Вход</a>
+                    <a href="{{ url_for('auth.reg') }}" class="btn btn-warning">Регистрация</a>
+                </div>
+                {% else %}
+                <div class="text-end fw-bold flex-grow-1">
+                    Hello, {{ current_user.username }} | <a href="{{ url_for('auth.logout') }}" class="text-black fw-bold text-decoration-none">Выход</a>
+                </div>
+                {% endif %}
+            </div>
         </div>
-      </div>
     </nav>
   </header>

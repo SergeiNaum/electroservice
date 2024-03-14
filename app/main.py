@@ -1,44 +1,55 @@
+from decimal import Decimal
+
 from flask import (
-    Flask, get_flashed_messages, render_template,
+    get_flashed_messages, render_template, Blueprint, redirect, url_for, flash, abort
 
 )
+from flask_login import current_user
+
+from .forms import ExpenseForm
+from .models import Post
+from . import db
+
+main = Blueprint('main', __name__)
 
 
-from app.app_config import SECRET_KEY
-
-app = Flask(__name__)
-app.secret_key = SECRET_KEY
-
-
-@app.route('/')
+@main.route('/', endpoint='index')
 def index():
-    messages = get_flashed_messages(with_categories=True)
 
-    return render_template('index.html', title='РегРЖД - Главная', messages=messages)
+    data = {
+        'h2_title': 'Расходы',
+        'messages': get_flashed_messages(with_categories=True),
+        'title': 'РегРЖД - Главная',
+        'active_page': 'index',
+        'expense_all': Post.query.all()
+    }
 
-
-@app.route('/reg')
-def reg():
-    messages = get_flashed_messages(with_categories=True)
-
-    return render_template('authTemplates/registration.html', title='РегРЖД - Регистрация', messages=messages)
-
-
-
-@app.route('/login')
-def login():
-    messages = get_flashed_messages(with_categories=True)
-
-    return render_template('authTemplates/login.html', title='РегРЖД - Вход', messages=messages)
+    return render_template('index.html', data=data)
 
 
-@app.route('/logout')
-def logout():
-    messages = get_flashed_messages(with_categories=True)
+@main.route('/create', endpoint='create', methods=['post', 'get'])
+def create_expense():
+    if not current_user.is_authenticated:
+        flash('Пользователь не залогинен', 'danger')
+        abort(403)
 
-    return render_template('authTemplates/login.html', title='РегРЖД-Вход', messages=messages)
+    form = ExpenseForm()
 
+    data = {
+        'h2_title': 'создание расхода',
+        'messages': get_flashed_messages(with_categories=True),
+        'title': 'РегРЖД - создание расхода',
+        'active_page': 'index'
+    }
 
+    if form.validate_on_submit():
+        price = Decimal(form.price.data)
+        expense = Post(title=form.title.data, content=form.description.data, price=price, author=current_user)
+        db.session.add(expense)
+        db.session.commit()
 
-if __name__ == "__main__":
-    app.run(debug=True)
+        flash('Запись добавлена', 'success')
+        return redirect(url_for('main.index'))
+
+    return render_template('expense_form.html',
+                           data=data, form=form)
