@@ -1,4 +1,4 @@
-
+[![Lint Code](https://github.com/SergeiNaum/electroservice/actions/workflows/linter_check.yml/badge.svg)](https://github.com/SergeiNaum/electroservice/actions/workflows/linter_check.yml)
 # Test task for the position of middle python backend developer from Elektrostroyservice company
 
 ## Quick start
